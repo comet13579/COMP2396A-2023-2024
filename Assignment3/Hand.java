@@ -17,12 +17,10 @@ public class Hand extends CardList{
     }
 
     public boolean beats(Hand hand){
-
+        return false;
     }
 
-    public boolean isValid(){
-    }
+    abstract public boolean isValid();
 
-    public String getType(){
-    }
+    abstract public String getType();
 }

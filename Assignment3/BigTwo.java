@@ -9,11 +9,12 @@ public class BigTwo {
     private BigTwoUI ui;
 
     public BigTwo() {
-        playerList = new ArrayList<CardGamePlayer>();
-        playerList.add(new CardGamePlayer());
-        playerList.add(new CardGamePlayer());
-        playerList.add(new CardGamePlayer());
-        playerList.add(new CardGamePlayer());
+        numberOfPlayers = 4;
+        playerList = new ArrayList<>();
+        for (int i = 0; i < numberOfPlayers; i++) {
+            playerList.add(new CardGamePlayer());
+        }
+        handsOnTable = new ArrayList<>();
         ui = new BigTwoUI(this);
     }
 
@@ -38,7 +39,7 @@ public class BigTwo {
     }
 
     public void start(Deck deck) {
-        int i = 0;
+        int i;
         for (i = 0; i < 4; i++) {
             playerList.get(i).removeAllCards();
         }
@@ -61,11 +62,11 @@ public class BigTwo {
     }
 
     public void makeMove(int playerIdx, int[] cardIdx) {
-
+        checkMove(playerIdx, cardIdx);
     }
 
     public void checkMove(int playerIdx, int[] cardIdx) {
-
+        
     }
 
     public boolean endOfGame() {
@@ -75,6 +76,52 @@ public class BigTwo {
             }
         }
         return false;
+    }
+
+    public static void main(String[] args) {
+        BigTwo game = new BigTwo();
+        Deck deck = new Deck();
+        deck.shuffle();
+        game.start(deck);
+    }
+
+    public static Hand composeHand(CardGamePlayer player, CardList cards) {
+        if (cards != null) {
+            Hand testHand = new Hand(player, cards);
+            testHand = (Single) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+            testHand = (Pair) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+            testHand = (Triple) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+            testHand = (Straight) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+            testHand = (Flush) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+            testHand = (FullHouse) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+            testHand = (Quad) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+            testHand = (StraightFlush) testHand;
+            if (testHand.isValid()) {
+                return testHand;
+            }
+        }
+        return null;
     }
 
 }

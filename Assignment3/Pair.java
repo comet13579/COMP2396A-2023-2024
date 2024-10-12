@@ -1,9 +1,8 @@
-public class Single extends Hand{
-    public Single(CardGamePlayer player, CardList cards){
+public class Pair extends Hand{
+    public Pair(CardGamePlayer player, CardList cards){
         super(player, cards);
     }
 
-    @Override
     public boolean isValid(){
         if(this.size() != 2){
             return false;
@@ -18,6 +17,6 @@ public class Single extends Hand{
 
     @Override
     public String getType(){
-        return "Single";
+        return "Pair";
     }
 }
