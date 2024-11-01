@@ -22,4 +22,19 @@ public class Triple extends Hand{
         return "Triple";
     }
     
+    @Override
+    public Card getTopCard(){
+        BigTwoCard card1 =  (BigTwoCard) this.getCard(0);
+        BigTwoCard card2 =  (BigTwoCard) this.getCard(1);
+        BigTwoCard card3 =  (BigTwoCard) this.getCard(2);
+        if (card1.compareTo(card2) == 1 && card1.compareTo(card3) == 1){
+            return card1;
+        }
+        else if (card2.compareTo(card1) == 1 && card2.compareTo(card3) == 1){
+            return card2;
+        }
+        else{
+            return card3;
+        }
+    }
 }

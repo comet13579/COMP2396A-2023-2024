@@ -4,7 +4,7 @@ public class BigTwoCard extends Card {
     }
 
     private int cardRankAdj(int rank){
-        if (rank < 2){
+        if (rank <= 2){
             return rank + 13;
         }
         return rank;

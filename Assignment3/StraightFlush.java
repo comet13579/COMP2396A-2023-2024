@@ -17,4 +17,9 @@ public class StraightFlush extends Hand{
     public  String getType(){
         return "StraightFlush";
     }
+
+    @Override
+    public Card getTopCard(){
+        return straight.getTopCard();
+    }
 }

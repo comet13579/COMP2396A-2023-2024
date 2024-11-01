@@ -8,6 +8,15 @@ public class BigTwo {
     private int currentPlayerIdx;
     private BigTwoUI ui;
 
+    private int winner(){
+        for (int i = 0; i < numberOfPlayers; i++) {
+            if (playerList.get(i).getCardsInHand().size() == 0) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public BigTwo() {
         numberOfPlayers = 4;
         playerList = new ArrayList<>();
@@ -57,8 +66,11 @@ public class BigTwo {
                 break;
             }
         }
-        ui.repaint();
-        ui.promptActivePlayer();
+        while (endOfGame()){
+            ui.repaint();
+            ui.promptActivePlayer();
+        }
+        System.out.println("Player " + (winner() + 1) + " wins!");
     }
 
     public void makeMove(int playerIdx, int[] cardIdx) {
@@ -87,6 +99,10 @@ public class BigTwo {
 
     public static Hand composeHand(CardGamePlayer player, CardList cards) {
         if (cards != null) {
+            StraightFlush testHand7 = (StraightFlush) cards;
+            if (testHand7.isValid()) {
+                return testHand7;
+            }
             Single testHand = (Single) cards;
             if (testHand.isValid()) {
                 return testHand;
@@ -114,10 +130,6 @@ public class BigTwo {
             Quad testHand6 = (Quad) cards;
             if (testHand6.isValid()) {
                 return testHand6;
-            }
-            StraightFlush testHand7 = (StraightFlush) cards;
-            if (testHand7.isValid()) {
-                return testHand7;
             }
         }
         return null;

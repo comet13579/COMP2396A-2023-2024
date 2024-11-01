@@ -26,4 +26,16 @@ public class Straight extends Hand{
     public String getType(){
         return "Straight";
     }
+
+    @Override
+    public Card getTopCard(){
+        BigTwoCard maxCard = (BigTwoCard) this.getCard(0);  
+        for (int i = 1; i < 5; i++) {
+            BigTwoCard currentCard = (BigTwoCard) this.getCard(i);
+            if (maxCard.compareTo(currentCard) == 1) {
+                maxCard = currentCard;
+            }
+        }
+        return maxCard;
+    }
 }
