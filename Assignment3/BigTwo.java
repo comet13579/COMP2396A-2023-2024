@@ -66,7 +66,7 @@ public class BigTwo {
     }
 
     public void checkMove(int playerIdx, int[] cardIdx) {
-        
+
     }
 
     public boolean endOfGame() {
@@ -87,38 +87,37 @@ public class BigTwo {
 
     public static Hand composeHand(CardGamePlayer player, CardList cards) {
         if (cards != null) {
-            Hand testHand = new Hand(player, cards);
-            testHand = (Single) testHand;
+            Single testHand = (Single) cards;
             if (testHand.isValid()) {
                 return testHand;
             }
-            testHand = (Pair) testHand;
-            if (testHand.isValid()) {
-                return testHand;
+            Pair testHand1 = (Pair) cards;
+            if (testHand1.isValid()) {
+                return testHand1;
             }
-            testHand = (Triple) testHand;
-            if (testHand.isValid()) {
-                return testHand;
+            Triple testHand2 = (Triple) cards;
+            if (testHand2.isValid()) {
+                return testHand2;
             }
-            testHand = (Straight) testHand;
-            if (testHand.isValid()) {
-                return testHand;
+            Straight testHand3 = (Straight) cards;
+            if (testHand3.isValid()) {
+                return testHand3;
             }
-            testHand = (Flush) testHand;
-            if (testHand.isValid()) {
-                return testHand;
+            Flush testHand4 = (Flush) cards;
+            if (testHand4.isValid()) {
+                return testHand4;
             }
-            testHand = (FullHouse) testHand;
-            if (testHand.isValid()) {
-                return testHand;
+            FullHouse testHand5 = (FullHouse) cards;
+            if (testHand5.isValid()) {
+                return testHand5;
             }
-            testHand = (Quad) testHand;
-            if (testHand.isValid()) {
-                return testHand;
+            Quad testHand6 = (Quad) cards;
+            if (testHand6.isValid()) {
+                return testHand6;
             }
-            testHand = (StraightFlush) testHand;
-            if (testHand.isValid()) {
-                return testHand;
+            StraightFlush testHand7 = (StraightFlush) cards;
+            if (testHand7.isValid()) {
+                return testHand7;
             }
         }
         return null;

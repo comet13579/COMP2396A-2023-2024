@@ -3,6 +3,7 @@ public class Quad extends Hand{
         super(player, cards);
     }
 
+    @Override
     public boolean isValid(){
         if(this.size() != 5){
             return false;
@@ -15,10 +16,7 @@ public class Quad extends Hand{
         if(card1.getRank() == card2.getRank() && card2.getRank() == card3.getRank() && card3.getRank() == card4.getRank()){
             return true;
         }
-        if(card2.getRank() == card3.getRank() && card3.getRank() == card4.getRank() && card4.getRank() == card5.getRank()){
-            return true;
-        }
-        return false;
+        return card2.getRank() == card3.getRank() && card3.getRank() == card4.getRank() && card4.getRank() == card5.getRank();
     }
     
     @Override

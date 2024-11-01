@@ -1,5 +1,5 @@
-public class Hand extends CardList{
-    private CardGamePlayer player;
+public abstract class Hand extends CardList {
+    private final CardGamePlayer player;
 
     public Hand(CardGamePlayer player, CardList cards){
         this.player = player;
