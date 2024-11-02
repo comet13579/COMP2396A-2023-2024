@@ -1,4 +1,11 @@
+/**
+ * Tester class to test the different hand types in the BigTwo game.
+ */
 public class Tester {
+    /**
+     * Main method to test the different hand types.
+     * @param args not used
+     */
     public static void main(String[] args) {
         testSingle();
         testPair();

@@ -1,6 +1,16 @@
+/**
+ * FullHouse class is a subclass of Hand and is used to model a hand of fullhouse in a Big Two card game.
+ * It overrides the isValid(), getType(), getTopCard(), and beats() methods it inherits from Hand.\
+ * @author Sonny Wong
+ */
 public class FullHouse extends Hand{
     private int[] rankCount;
     private int TripleRank;
+    /**
+     * a constructor for building a FullHouse with the specified player and list of cards.
+     * @param player the player who plays this hand
+     * @param cards the list of cards
+     */
     public FullHouse(CardGamePlayer player, CardList cards){
         super(player, cards);
         rankCount = new int[13];
@@ -15,6 +25,10 @@ public class FullHouse extends Hand{
         }
     }
 
+    /**
+     * a method for checking if this is a valid hand.
+     * @return true if the hand is a valid fullhouse, false otherwise
+     */
     @Override
     public boolean isValid(){
         if(this.size() != 5){
@@ -33,11 +47,19 @@ public class FullHouse extends Hand{
         return triplettrue && pairtrue;
     }
 
+    /**
+     * a method for returning a string specifying the type of this hand.
+     * @return a string specifying the type of hand, "FullHouse"
+     */
     @Override
     public String getType(){
         return "FullHouse";
     }
 
+    /**
+     * a method for retrieving the top card of this hand
+     * @return the top card of this hand
+     */
     @Override
     public Card getTopCard() {
         int maxTripleSuit = 0;
@@ -48,7 +70,11 @@ public class FullHouse extends Hand{
         }
         return new Card(maxTripleSuit, TripleRank);
     }
-
+    
+     /**
+     * a method for checking if this hand beats a specified hand
+     *  @param hand the target hand to compare with
+     */
     @Override
     public boolean beats(Hand hand){
         if (hand.size() != 5){
