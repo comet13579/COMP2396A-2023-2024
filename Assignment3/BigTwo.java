@@ -99,38 +99,48 @@ public class BigTwo {
 
     public static Hand composeHand(CardGamePlayer player, CardList cards) {
         if (cards != null) {
-            StraightFlush testHand7 = (StraightFlush) cards;
-            if (testHand7.isValid()) {
-                return testHand7;
-            }
-            Single testHand = (Single) cards;
-            if (testHand.isValid()) {
-                return testHand;
-            }
-            Pair testHand1 = (Pair) cards;
-            if (testHand1.isValid()) {
-                return testHand1;
-            }
-            Triple testHand2 = (Triple) cards;
-            if (testHand2.isValid()) {
-                return testHand2;
-            }
-            Straight testHand3 = (Straight) cards;
-            if (testHand3.isValid()) {
-                return testHand3;
-            }
-            Flush testHand4 = (Flush) cards;
-            if (testHand4.isValid()) {
-                return testHand4;
-            }
-            FullHouse testHand5 = (FullHouse) cards;
-            if (testHand5.isValid()) {
-                return testHand5;
-            }
-            Quad testHand6 = (Quad) cards;
-            if (testHand6.isValid()) {
-                return testHand6;
-            }
+            try {
+                StraightFlush straightFlush = new StraightFlush(player, cards);
+                if (straightFlush.isValid()) return straightFlush;
+            } catch (Exception e) {}
+            
+            try {
+                Single single = new Single(player, cards);
+                if (single.isValid()) return single;
+            } catch (Exception e) {}
+        
+            try {
+                Pair pair = new Pair(player, cards);
+                if (pair.isValid()) return pair;
+            } catch (Exception e) {}
+        
+            try {
+                Triple triple = new Triple(player, cards);
+                if (triple.isValid()) return triple;
+            } catch (Exception e) {}
+        
+            try {
+                Straight straight = new Straight(player, cards);
+                if (straight.isValid()) return straight;
+            } catch (Exception e) {}
+        
+            try {
+                Flush flush = new Flush(player, cards);
+                if (flush.isValid()) return flush;
+            } catch (Exception e) {}
+        
+            try {
+                FullHouse fullHouse = new FullHouse(player, cards);
+                if (fullHouse.isValid()) return fullHouse;
+            } catch (Exception e) {}
+        
+            try {
+                Quad quad = new Quad(player, cards);
+                if (quad.isValid()) return quad;
+            } catch (Exception e) {}
+        
+            return null;
+        
         }
         return null;
     }

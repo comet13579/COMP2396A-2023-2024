@@ -8,14 +8,18 @@ public class Straight extends Hand{
         if (this.size() != 5) {
             return false;
         }
-
-        this.sort();
-        BigTwoCard currentCard;
-        BigTwoCard nextCard;
+        int rankArray[] = new int[5];
+        for (int i = 0; i < 5; i++) {
+            int num = this.getCard(i).getRank();
+            if (num < 2) {
+                rankArray[i] = num + 13;
+            } else {
+                rankArray[i] = num;
+            }
+        }
+        java.util.Arrays.sort(rankArray);
         for (int i = 0; i < 4; i++) {
-            currentCard = (BigTwoCard) this.getCard(i);
-            nextCard = (BigTwoCard) this.getCard(i + 1);
-            if (currentCard.getRank() != nextCard.getRank() - 1) {
+            if (rankArray[i] + 1 != rankArray[i + 1]) {
                 return false;
             }
         }
@@ -29,10 +33,10 @@ public class Straight extends Hand{
 
     @Override
     public Card getTopCard(){
-        BigTwoCard maxCard = (BigTwoCard) this.getCard(0);  
+        BigTwoCard maxCard = new BigTwoCard(this.getCard(0).getSuit(), this.getCard(0).getRank());  
         for (int i = 1; i < 5; i++) {
-            BigTwoCard currentCard = (BigTwoCard) this.getCard(i);
-            if (maxCard.compareTo(currentCard) == 1) {
+            BigTwoCard currentCard = new BigTwoCard(this.getCard(i).getSuit(), this.getCard(i).getRank());
+            if (maxCard.getRank() < currentCard.getRank()) {
                 maxCard = currentCard;
             }
         }

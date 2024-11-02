@@ -11,10 +11,7 @@ public class Triple extends Hand{
         Card card1 = this.getCard(0);
         Card card2 = this.getCard(1);
         Card card3 = this.getCard(2);
-        if(card1.getRank() == card2.getRank() && card2.getRank() == card3.getRank()){
-            return true;
-        }
-        return false;
+        return card1.getRank() == card2.getRank() && card2.getRank() == card3.getRank();
     }
 
     @Override
@@ -24,9 +21,9 @@ public class Triple extends Hand{
     
     @Override
     public Card getTopCard(){
-        BigTwoCard card1 =  (BigTwoCard) this.getCard(0);
-        BigTwoCard card2 =  (BigTwoCard) this.getCard(1);
-        BigTwoCard card3 =  (BigTwoCard) this.getCard(2);
+        BigTwoCard card1 = new BigTwoCard(this.getCard(0).getSuit(), this.getCard(0).getRank());
+        BigTwoCard card2 = new BigTwoCard(this.getCard(1).getSuit(), this.getCard(1).getRank());
+        BigTwoCard card3 = new BigTwoCard(this.getCard(2).getSuit(), this.getCard(2).getRank());
         if (card1.compareTo(card2) == 1 && card1.compareTo(card3) == 1){
             return card1;
         }

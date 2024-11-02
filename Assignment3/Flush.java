@@ -23,9 +23,9 @@ public class Flush extends Hand{
 
     @Override
     public Card getTopCard(){
-        BigTwoCard maxCard = (BigTwoCard) this.getCard(0);  
+        BigTwoCard maxCard = new BigTwoCard(this.getCard(0).getSuit(), this.getCard(0).getRank());
         for (int i = 1; i < 5; i++) {
-            BigTwoCard currentCard = (BigTwoCard) this.getCard(i);
+            BigTwoCard currentCard = new BigTwoCard(this.getCard(i).getSuit(), this.getCard(i).getRank());
             if (maxCard.compareTo(currentCard) == 1) {
                 maxCard = currentCard;
             }

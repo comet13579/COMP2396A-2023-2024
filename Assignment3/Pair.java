@@ -3,6 +3,7 @@ public class Pair extends Hand{
         super(player, cards);
     }
 
+    @Override
     public boolean isValid(){
         if(this.size() != 2){
             return false;
@@ -19,8 +20,9 @@ public class Pair extends Hand{
 
     @Override
     public Card getTopCard(){
-        BigTwoCard card1 =  (BigTwoCard) this.getCard(0);
-        BigTwoCard card2 =  (BigTwoCard) this.getCard(1);
+        BigTwoCard card1 = new BigTwoCard(this.getCard(0).getSuit(), this.getCard(0).getRank());
+        BigTwoCard card2 = new BigTwoCard(this.getCard(1).getSuit(), this.getCard(1).getRank());
+
         if (card1.compareTo(card2) == 1){
             return card1;
         }
