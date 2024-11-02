@@ -64,7 +64,15 @@ public class BigTwo {
             ui.repaint();
             ui.promptActivePlayer();
         }
-        ui.printMsg("Game Over!");
+        ui.printMsg("Game ends\n");
+        for (i = 0; i < 4; i++) {
+            if (playerList.get(i).getNumOfCards() != 0) {
+                ui.printMsg(playerList.get(i).getName() + " wins the game.\n");
+            }
+            else{
+                ui.printMsg(playerList.get(i).getName() + " wins the game\n");
+            }
+        }
     }
 
     public void makeMove(int playerIdx, int[] cardIdx) {
@@ -111,7 +119,7 @@ public class BigTwo {
             if (tempHand == null){
                 ui.printMsg("Not a legal move!!!\n");
             }
-            else if (handsOnTable.get(handsOnTable.size() - 1).getPlayer().getName().equals(playerList.get(playerIdx).getName()) &&
+            else if (!handsOnTable.get(handsOnTable.size() - 1).getPlayer().getName().equals(playerList.get(playerIdx).getName()) &&
                     !tempHand.beats(handsOnTable.get(handsOnTable.size() - 1))){
                     ui.printMsg("Not a legal move!!!\n");
             }
