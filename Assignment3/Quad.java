@@ -37,6 +37,17 @@ public class Quad extends Hand{
     @Override
     public Card getTopCard(){
         return new Card(3, QuadRank);
-
     }
+
+    @Override
+    public boolean beats(Hand hand){
+        if (hand.size() != 5){
+            return false;
+        }
+        if (!hand.getType().equals("StraightFlush")){
+            return false;
+        }
+        BigTwoCard topCard = new BigTwoCard(this.getTopCard().getSuit(), this.getTopCard().getRank());
+        return topCard.compareTo(hand.getTopCard()) > 0;
+    }   
 }

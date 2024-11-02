@@ -1,6 +1,6 @@
 public class StraightFlush extends Hand{
-    private Straight straight;
-    private Flush flush;
+    private final Straight straight;
+    private final Flush flush;
     
     public StraightFlush(CardGamePlayer player, CardList cards){
         super(player, cards);
@@ -14,12 +14,24 @@ public class StraightFlush extends Hand{
     }
 
     @Override
-    public  String getType(){
+    public String getType(){
         return "StraightFlush";
     }
 
     @Override
     public Card getTopCard(){
         return straight.getTopCard();
+    }
+
+    @Override
+    public boolean beats(Hand hand){
+        if (hand.size() != 5){
+            return false;
+        }
+        if (!hand.getType().equals("StraightFlush")){
+            return true;
+        }
+        BigTwoCard topCard = new BigTwoCard(this.getTopCard().getSuit(), this.getTopCard().getRank());
+        return topCard.compareTo(hand.getTopCard()) > 0;
     }
 }

@@ -42,4 +42,16 @@ public class Straight extends Hand{
         }
         return maxCard;
     }
+
+    @Override
+    public boolean beats(Hand hand){
+        if (hand.size() != 5){
+            return false;
+        }
+        if (!hand.getType().equals("Straight")){
+            return false;
+        }
+        BigTwoCard topCard = new BigTwoCard(this.getTopCard().getSuit(), this.getTopCard().getRank());
+        return topCard.compareTo(hand.getTopCard()) > 0;
+    }
 }

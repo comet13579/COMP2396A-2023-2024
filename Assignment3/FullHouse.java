@@ -15,18 +15,6 @@ public class FullHouse extends Hand{
         }
     }
 
-    private BigTwoCard findTripletMax(BigTwoCard card1, BigTwoCard card2, BigTwoCard card3){
-        if (card1.compareTo(card2) == 1 && card1.compareTo(card3) == 1){
-            return card1;
-        }
-        else if (card2.compareTo(card1) == 1 && card2.compareTo(card3) == 1){
-            return card2;
-        }
-        else{
-            return card3;
-        }
-    }
-
     @Override
     public boolean isValid(){
         if(this.size() != 5){
@@ -59,5 +47,20 @@ public class FullHouse extends Hand{
             }
         }
         return new Card(maxTripleSuit, TripleRank);
+    }
+
+    @Override
+    public boolean beats(Hand hand){
+        if (hand.size() != 5){
+            return false;
+        }
+        if (hand.getType().equals("Flush") || hand.getType().equals("Straight")){
+            return true;
+        }
+        if (hand.getType().equals("FullHouse")){
+            return this.getTopCard().compareTo(hand.getTopCard()) > 0;
+        }
+        BigTwoCard topCard = new BigTwoCard(this.getTopCard().getSuit(), this.getTopCard().getRank());
+        return topCard.compareTo(hand.getTopCard()) > 0;
     }
 }

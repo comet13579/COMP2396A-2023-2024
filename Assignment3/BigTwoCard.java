@@ -12,17 +12,16 @@ public class BigTwoCard extends Card {
 
     @Override
     public int compareTo(Card card){
-        if (this.getRank() > card.getRank()){
+        if (cardRankAdj(this.getRank()) > cardRankAdj(card.getRank())){
             return 1;
         }
-        else if (this.getRank() < card.getRank()){
+        else if (cardRankAdj(this.getRank()) < cardRankAdj(card.getRank())){
             return -1;
         }
-        
-        if (cardRankAdj(this.getSuit()) > cardRankAdj(card.getSuit())){
+        if (this.getSuit() > card.getSuit()){
             return 1;
         }
-        else if (cardRankAdj(this.getSuit()) < cardRankAdj(card.getSuit())){
+        else if (this.getSuit() < card.getSuit()){
             return -1;
         }
         return 0;

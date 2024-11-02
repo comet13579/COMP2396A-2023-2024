@@ -13,11 +13,16 @@ public abstract class Hand extends CardList {
     }
 
     public Card getTopCard(){
+        this.sort();
         return this.getCard(this.size()-1);
     }
 
     public boolean beats(Hand hand){
-        return false;
+        if(this.size() != hand.size()){
+            return false;
+        }
+        BigTwoCard topCard = new BigTwoCard(this.getTopCard().getSuit(), this.getTopCard().getRank());
+        return topCard.compareTo(hand.getTopCard()) > 0;
     }
 
     abstract public boolean isValid();
