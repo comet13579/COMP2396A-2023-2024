@@ -49,7 +49,7 @@ public class Flush extends Hand{
         BigTwoCard maxCard = new BigTwoCard(this.getCard(0).getSuit(), this.getCard(0).getRank());
         for (int i = 1; i < 5; i++) {
             BigTwoCard currentCard = new BigTwoCard(this.getCard(i).getSuit(), this.getCard(i).getRank());
-            if (maxCard.compareTo(currentCard) == 1) {
+            if (maxCard.compareTo(currentCard) == -1) {
                 maxCard = currentCard;
             }
         }
