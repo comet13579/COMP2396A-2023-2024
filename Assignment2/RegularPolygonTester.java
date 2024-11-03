@@ -30,5 +30,13 @@ public class RegularPolygonTester {
 
         RegularPolygon polygon4 = new RegularPolygon(2, -1);
         System.out.println("Polygon 4 (edge case) - Sides: " + polygon4.getNumOfSides() + ", Radius: " + polygon4.getRadius());
+
+        //test getxLocal and getyLocal
+        double[] xLocalTest = polygon3.getXLocal();
+        double[] yLocalTest = polygon3.getYLocal();
+        System.out.println("Local coordinates:");
+        for (int i = 0; i < xLocalTest.length; i++) {
+            System.out.println("(" + xLocalTest[i] + ", " + yLocalTest[i] + ")");
+        }
     }
 }

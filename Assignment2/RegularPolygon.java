@@ -104,9 +104,18 @@ public final class RegularPolygon extends Shape{
     private void setVertices(){
         double[] tempXlist = new double[numOfSides];
         double[] tempYlist = new double[numOfSides];
-        for (int i = 0;i < numOfSides;i++){
-            tempXlist[i] = radius * Math.cos((i+1) * 2 * Math.PI / numOfSides);
-            tempYlist[i] = radius * Math.sin((i+1) * 2 * Math.PI / numOfSides);
+        if (numOfSides % 2 == 1){
+            for (int i = 0;i < numOfSides;i++){
+                tempXlist[i] = radius * Math.cos(i * 2 * Math.PI / numOfSides);
+                tempYlist[i] = radius * Math.sin(i * 2 * Math.PI / numOfSides);
+            }
+        }
+        else{
+            for (int i = 0; i < numOfSides; i++){
+                tempXlist[i] = radius * Math.cos((i * 2 + 1) * Math.PI / numOfSides);
+                tempYlist[i] = radius * Math.sin((i * 2 + 1)* Math.PI / numOfSides);
+            }
+
         }
         this.setXLocal(tempXlist);
         this.setYLocal(tempYlist);
