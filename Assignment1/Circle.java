@@ -20,8 +20,8 @@ public class Circle extends Shape{
      */
     @Override
     public void setVertices(double d){
-        xlocal = new double[]{-d,d};
-        ylocal = new double[]{-d ,d};
+        xLocal = new double[]{-d,d};
+        yLocal = new double[]{-d ,d};
     }
 
     /**
@@ -32,11 +32,10 @@ public class Circle extends Shape{
      * @return the x-coordinates of the vertices of the shape in the canvas coordinate system
      */
     @Override
-    public int[] getX(){
-        int[] temparray;
-        temparray = new int[2];
-        for (int i = 0; i < 2; i++){
-            temparray[i] = (int) (xlocal[i] + xc + 0.5);
+    public int[] getX() {
+        int[] temparray = new int[2];
+        for (int i = 0; i < 2; i++) {
+            temparray[i] = (int) Math.round(this.xLocal[i] + xc);
         }
         return temparray;
     }
@@ -52,7 +51,7 @@ public class Circle extends Shape{
         int[] temparray;
         temparray = new int[2];
         for (int i = 0; i < 2; i++){
-            temparray[i] = (int) (ylocal[i] + yc + 0.5);
+            temparray[i] = (int) Math.round(this.yLocal[i] + yc);
         }
         return temparray;
     }

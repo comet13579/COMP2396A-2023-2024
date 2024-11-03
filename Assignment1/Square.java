@@ -1,3 +1,5 @@
+import java.awt.color.*;
+
 /**
  * The Square class is used to model squares. It is a subclass of the Shape class 
  * and it inherits all the instance variables and methods of the Shape class. 
@@ -17,7 +19,7 @@ public class Square extends Shape{
      */
     @Override
     public void setVertices(double d) {
-        xlocal = new double[]{d, d, -d, -d};
-        ylocal = new double[]{d, -d, -d, d};
+        xLocal = new double[]{d, d, -d, -d};
+        yLocal = new double[]{d, -d, -d, d};
     }
 }

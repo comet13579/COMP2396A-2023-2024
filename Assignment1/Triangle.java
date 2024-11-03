@@ -20,7 +20,7 @@ public class Triangle extends Shape{
     public void setVertices(double d) {
         double xtemp = -d * Math.cos(Math.PI / 3);
         double ytemp = d * Math.sin(Math.PI / 3);
-        xlocal = new double[]{d, xtemp,xtemp};
-        ylocal = new double[]{0, -1 * ytemp, ytemp};
+        xLocal = new double[]{d, xtemp,xtemp};
+        yLocal = new double[]{0, -1 * ytemp, ytemp};
     }
 }

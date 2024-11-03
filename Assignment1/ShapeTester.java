@@ -33,8 +33,8 @@ public class ShapeTester {
         
         testShape.setVertices(10);
         
-        testShape.xlocal = new double[]{0, 10, 10, 0};
-        testShape.ylocal = new double[]{0, 0, 10, 10};
+        testShape.xLocal = new double[]{0, 10, 10, 0};
+        testShape.yLocal = new double[]{0, 0, 10, 10};
         int[] xCoords = testShape.getX();
         int[] yCoords = testShape.getY();
         for (int i = 0; i < xCoords.length; i++) {
