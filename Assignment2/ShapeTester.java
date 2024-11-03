@@ -43,6 +43,15 @@ public class ShapeTester {
         for (int i = 0; i < canvasX.length; i++) {
             System.out.println("(" + canvasX[i] + ", " + canvasY[i] + ")");
         }
+
+        //test getXLocal and getYLocal
+        double[] xLocalTest = testShape.getXLocal();
+        double[] yLocalTest = testShape.getYLocal();
+        System.out.println("Local coordinates:");
+        for (int i = 0; i < xLocalTest.length; i++) {
+
+            System.out.println("(" + xLocalTest[i] + ", " + yLocalTest[i] + ")");
+        }
     }
 }
 
