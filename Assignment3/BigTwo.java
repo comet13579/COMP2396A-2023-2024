@@ -176,6 +176,8 @@ public class BigTwo {
      *  a method for
      *  returning a valid hand from the specified list of cards of the player. Returns null if no
      *  valid hand can be composed from the specified list of cards.
+     *  @param player the player who plays the hand
+     *  @param cards  the list of cards to play
      */
     public static Hand composeHand(CardGamePlayer player, CardList cards) {
         if (cards != null) {
