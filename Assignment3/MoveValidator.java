@@ -5,7 +5,7 @@ import java.util.Arrays;
  * The MoveValidator class is used to validate the move made by the player.
  */
 public class MoveValidator {
-    private BigTwoUI ui;
+    private final BigTwoUI ui;
     private final ArrayList<Hand> handsOnTable;
     private final ArrayList<CardGamePlayer> playerList;
 
