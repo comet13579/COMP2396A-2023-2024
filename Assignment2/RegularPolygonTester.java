@@ -21,7 +21,7 @@ public class RegularPolygonTester {
         System.out.println("Polygon 3 - Sides: " + polygon3.getNumOfSides() + ", Radius: " + polygon3.getRadius());
 
 
-        polygon3.setNumOfSides(8);
+        polygon3.setNumOfSides(3);
         polygon3.setRadius(3.0);
         System.out.println("Polygon 3 (after setters) - Sides: " + polygon3.getNumOfSides() + ", Radius: " + polygon3.getRadius());
 
