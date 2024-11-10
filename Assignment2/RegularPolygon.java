@@ -33,7 +33,7 @@ public final class RegularPolygon extends Shape{
 
     /**
      * a constructor for building a regular n-sided polygon with a radius of 1.0.
-     * @param n
+     * @param n number of sides
      */
     public RegularPolygon(int n) {
         this(n, 1.0);
@@ -101,22 +101,21 @@ public final class RegularPolygon extends Shape{
         setVertices();
     }
 
-    /**
-     * a method for setting the local coordinates of the vertices of the 
-     * regular n-sided polygon based on its number of sides and radius. 
-     * If the number of sides is an odd number, the first vertex should 
-     * lie on the positive x-axis and its distance from the origin is 
-     * given by the radius of the regular n-sided polygon. The rest of 
-     * the vertices can be obtained by rotating this vertex about the 
-     * origin by a multiple of 2p/n, where n is the number of sides, 
-     * in a counter-clockwise manner
-     */
-    public void setVertices(){
+    private void setVertices(){
         double[] tempXlist = new double[numOfSides];
         double[] tempYlist = new double[numOfSides];
-        for (int i = 0;i < numOfSides;i++){
-            tempXlist[i] = radius * Math.cos((i+1) * 2 * Math.PI / numOfSides);
-            tempYlist[i] = radius * Math.sin((i+1) * 2 * Math.PI / numOfSides);
+        if (numOfSides % 2 == 1){
+            for (int i = 0;i < numOfSides;i++){
+                tempXlist[i] = radius * Math.cos(i * 2 * Math.PI / numOfSides);
+                tempYlist[i] = radius * Math.sin(i * 2 * Math.PI / numOfSides);
+            }
+        }
+        else{
+            for (int i = 0; i < numOfSides; i++){
+                tempXlist[i] = radius * Math.cos((i * 2 + 1) * Math.PI / numOfSides);
+                tempYlist[i] = radius * Math.sin((i * 2 + 1)* Math.PI / numOfSides);
+            }
+
         }
         this.setXLocal(tempXlist);
         this.setYLocal(tempYlist);

@@ -1,0 +1,24 @@
+Feedback comments	(all of the error has been fixed)
+
+
+Shape class and its tester class: 29/40
+Square class and its tester class: 9.5/10
+Triangle class and its tester class: 9.5/10
+Circle class and its tester class: 15.5/20
+Javadoc and comments: 20/20
+
+[Shape.java]
+Missing instance variables xLocal and yLocal. Must follow exact capitalization.
+Incorrect Shape.getX() and Shape.getY(), they should round the result to the nearest integer. Type casting after adding 0.5 does not work for negative values.
+
+[Tester (Square)]
+Missing test of inherited methods.
+
+[Tester (Triangle)]
+Missing test of inherited methods.
+
+[Circle.java]
+Incorrect Circle.getX() and Circle.getY(), they should round the result to the nearest integer. (Same problem as in class Square)
+
+[Tester (Circle)]
+Missing test of inherited methods.

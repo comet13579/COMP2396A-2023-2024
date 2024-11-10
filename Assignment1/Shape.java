@@ -29,21 +29,21 @@ public class Shape {
     public double yc; 
 
     /** xLocal – an array of double values specifying the x-coordinates of the vertices (in counter-clockwise order) of the shape in its local coordinate system. */
-    public double[] xlocal; 
+    public double[] xLocal; 
 
     /** yLocal – an array of double values specifying the y-coordinates of the vertices (in counter- clockwise order) of the shape in its local coordinate system. */
-    public double[] ylocal;
+    public double[] yLocal;
 
     private int canvasCoordX(double x,double y){
         double tempX;
         tempX = x * Math.cos(theta) - y * Math.sin(theta) + xc;
-        return (int) (tempX + 0.5);
+        return (int) Math.round(tempX);
     }
 
     private int canvasCoordY(double x,double y){
         double tempY;
         tempY = x * Math.sin(theta) + y * Math.cos(theta) + yc;
-        return (int) (tempY + 0.5);
+        return (int) Math.round(tempY);
     }
 
     /**
@@ -82,9 +82,9 @@ public class Shape {
      */
     public int[] getX(){
         int[] temparray;
-        temparray = new int[xlocal.length];
-        for (int i = 0; i < xlocal.length; i++){
-            temparray[i] = canvasCoordX(xlocal[i], ylocal[i]);
+        temparray = new int[xLocal.length];
+        for (int i = 0; i < xLocal.length; i++){
+            temparray[i] = canvasCoordX(xLocal[i], yLocal[i]);
         }
         return temparray;
     }
@@ -96,9 +96,9 @@ public class Shape {
      */
     public int[] getY(){
         int[] temparray;
-        temparray = new int[ylocal.length];
-        for (int i = 0; i < ylocal.length; i++){
-            temparray[i] = canvasCoordY(xlocal[i], ylocal[i]);
+        temparray = new int[yLocal.length];
+        for (int i = 0; i < yLocal.length; i++){
+            temparray[i] = canvasCoordY(xLocal[i], yLocal[i]);
         }
         return temparray;
     }
