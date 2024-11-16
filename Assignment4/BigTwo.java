@@ -14,7 +14,7 @@ public class BigTwo {
     private ArrayList<CardGamePlayer> playerList;
     private ArrayList<Hand> handsOnTable;
     private int currentPlayerIdx;
-    private BigTwoUI ui;
+    private BigTwoGUI ui;
 
     private void nextPlayer() {
         currentPlayerIdx = (currentPlayerIdx + 1) % 4;
@@ -33,7 +33,7 @@ public class BigTwo {
             playerList.add(new CardGamePlayer());
         }
         handsOnTable = new ArrayList<>();
-        ui = new BigTwoUI(this);
+        ui = new BigTwoGUI(this);
     }
 
     /**
