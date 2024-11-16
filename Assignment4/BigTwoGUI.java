@@ -52,7 +52,6 @@ public class BigTwoGUI implements CardGameUI {
         playButton = new JButton("Play");
         passButton = new JButton("Pass");
         
-    // Remove any printMsg calls from these button listeners
     playButton.addActionListener(e -> {
         if (getSelected().length > 0) {
             game.makeMove(activePlayer, getSelected());
@@ -197,28 +196,6 @@ public class BigTwoGUI implements CardGameUI {
             g.drawRect(x, y, CARD_WIDTH, CARD_HEIGHT);
         }
         
-        public void mouseClicked(MouseEvent e) {
-            if (activePlayer >= 0) {
-                int x = e.getX();
-                int y = e.getY();
-                CardList cards = game.getPlayerList().get(activePlayer).getCardsInHand();
-                
-                for (int i = 0; i < cards.size(); i++) {
-                    Rectangle cardBounds = new Rectangle(
-                        70 + (i * CARD_OVERLAP),
-                        activePlayer * (CARD_HEIGHT + 20) + 30,
-                        CARD_WIDTH,
-                        CARD_HEIGHT
-                    );
-                    
-                    if (cardBounds.contains(x, y)) {
-                        selected[i] = !selected[i];
-                        repaint();
-                        break;
-                    }
-                }
-            }
-        }
 
     }
     
@@ -247,14 +224,15 @@ public class BigTwoGUI implements CardGameUI {
     public void clearMsgArea() {
         msgArea.setText("");
     }
-    
+
     @Override
-    public void reset() {
-        Arrays.fill(selected, false);
+    public void reset(){
         clearMsgArea();
         chatArea.setText("");
-        disable();
-        repaint();
+        chatInput.setText("");
+        Arrays.fill(selected, false);
+        BigTwoDeck deck = new BigTwoDeck();
+        game.start(deck);
     }
     
     @Override
@@ -262,6 +240,7 @@ public class BigTwoGUI implements CardGameUI {
         playButton.setEnabled(true);
         passButton.setEnabled(true);
         chatInput.setEnabled(true);
+        bigTwoPanel.setEnabled(true);
     }
     
     @Override
@@ -269,6 +248,7 @@ public class BigTwoGUI implements CardGameUI {
         playButton.setEnabled(false);
         passButton.setEnabled(false);
         chatInput.setEnabled(false);
+        bigTwoPanel.setEnabled(false);
     }
     
     @Override
@@ -293,16 +273,7 @@ public class BigTwoGUI implements CardGameUI {
     private class RestartMenuItemListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            for (CardGamePlayer player : game.getPlayerList()) {
-                player.removeAllCards();
-            }
-            game.getHandsOnTable().clear();
-            BigTwoDeck deck = new BigTwoDeck();
-            deck.initialize();
-            deck.shuffle();
-            game.start(deck);
             reset();
-            repaint();
         }
     }
 
