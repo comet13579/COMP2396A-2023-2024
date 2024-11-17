@@ -6,6 +6,7 @@
 public class Quad extends Hand{
     private int[] rankCount;
     private int QuadRank;
+    
     /**
      * a constructor for building a Quad with the specified player and list of cards.
      * @param player the player who plays this hand

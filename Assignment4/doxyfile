@@ -1,4 +1,4 @@
-PROJECT_NAME           = "COMP2396_Assignment4"
+PROJECT_NAME           = "COMP2396_Assignment3"
 INPUT                  = .
 RECURSIVE              = YES
 EXTRACT_ALL            = YES
