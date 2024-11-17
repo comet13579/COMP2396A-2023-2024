@@ -188,6 +188,7 @@ public class BigTwo {
      * @param deck the deck of cards to be used
      */
     public void start(Deck deck) {
+        ui.enable();
         int i;
         for (i = 0; i < 4; i++) {
             playerList.get(i).removeAllCards();
@@ -236,6 +237,7 @@ public class BigTwo {
                     ui.printMsg(playerList.get(i).getName() + " win the game\n");
                 }
             }
+            ui.disable();
         }
     }
 
