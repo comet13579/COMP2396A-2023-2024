@@ -214,7 +214,7 @@ public class BigTwo {
         ui.printMsg("Game ends\n");
         for (i = 0; i < 4; i++) {
             if (playerList.get(i).getNumOfCards() != 0) {
-                ui.printMsg(playerList.get(i).getName() + " wins the game.\n");
+                ui.printMsg(playerList.get(i).getName() + " looses the game.\n");
             }
             else{
                 ui.printMsg(playerList.get(i).getName() + " wins the game\n");

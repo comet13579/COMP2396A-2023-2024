@@ -15,18 +15,19 @@ public class BigTwo {
     private ArrayList<CardGamePlayer> playerList;
     private ArrayList<Hand> handsOnTable;
     private int currentPlayerIdx;
-    private BigTwoUI ui;
+    private BigTwoGUI ui;
 
     private void nextPlayer() {
         currentPlayerIdx = (currentPlayerIdx + 1) % 4;
         ui.setActivePlayer(currentPlayerIdx);
+        ui.promptActivePlayer();
     }
 
     /**
      * a private class for checking a move made by a player.
      */
     private class MoveValidator {
-        private final BigTwoUI ui;
+        private final BigTwoGUI ui;
         private final ArrayList<Hand> handsOnTable;
         private final ArrayList<CardGamePlayer> playerList;
 
@@ -36,7 +37,7 @@ public class BigTwo {
          * @param handsOnTable ArrayList of Hand objects
          * @param playerList ArrayList of CardGamePlayer objects
          */
-        public MoveValidator(BigTwoUI ui, ArrayList<Hand> handsOnTable, ArrayList<CardGamePlayer> playerList) {
+        public MoveValidator(BigTwoGUI ui, ArrayList<Hand> handsOnTable, ArrayList<CardGamePlayer> playerList) {
             this.ui = ui;
             this.handsOnTable = handsOnTable;
             this.playerList = playerList;
@@ -131,8 +132,7 @@ public class BigTwo {
         for (int i = 0; i < numberOfPlayers; i++) {
             playerList.add(new CardGamePlayer());
         }
-        handsOnTable = new ArrayList<>();
-        ui = new BigTwoUI(this);
+        ui = new BigTwoGUI(this);
     }
 
     /**
@@ -191,13 +191,15 @@ public class BigTwo {
         for (i = 0; i < 4; i++) {
             playerList.get(i).removeAllCards();
         }
-
+    
+        handsOnTable = new ArrayList<>();
+    
         for (i = 0; i < 4; i++) {
             for (int j = 0; j < 13; j++) {
                 playerList.get(i).addCard(deck.getCard(i * 13 + j));
             }   
         }
-
+    
         for (i = 0; i < 4; i++) {
             if (playerList.get(i).getCardsInHand().contains(new Card(0,2))) {
                 currentPlayerIdx = i;
@@ -205,22 +207,12 @@ public class BigTwo {
                 break;
             }
         }
-
-        while (!endOfGame()){
-            playerList.get(currentPlayerIdx).sortCardsInHand();
-            ui.repaint();
-            ui.promptActivePlayer();
-        }
-        ui.printMsg("Game ends\n");
-        for (i = 0; i < 4; i++) {
-            if (playerList.get(i).getNumOfCards() != 0) {
-                ui.printMsg(playerList.get(i).getName() + " wins the game.\n");
-            }
-            else{
-                ui.printMsg(playerList.get(i).getName() + " wins the game\n");
-            }
-        }
+    
+        playerList.get(currentPlayerIdx).sortCardsInHand();
+        ui.repaint();
+        ui.promptActivePlayer();
     }
+
 
     /**
      * a method for checking a move made by a player.
@@ -231,6 +223,18 @@ public class BigTwo {
         MoveValidator validator = new MoveValidator(ui, handsOnTable, playerList);
         if (validator.validateMove(playerIdx, cardIdx)) {
             nextPlayer();
+            playerList.get(currentPlayerIdx).sortCardsInHand();
+        }
+        if (endOfGame()) {
+            ui.printMsg("Game ends\n");
+            for (int i = 0; i < 4; i++) {
+                if (playerList.get(i).getNumOfCards() != 0) {
+                    ui.printMsg(playerList.get(i).getName() + " looses the game.\n");
+                }
+                else {
+                    ui.printMsg(playerList.get(i).getName() + " win the game\n");
+                }
+            }
         }
     }
 
