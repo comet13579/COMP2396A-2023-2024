@@ -116,6 +116,7 @@ public class BigTwo {
         private void executeMove(int playerIdx, Hand hand) {
             handsOnTable.add(hand);
             playerList.get(playerIdx).removeCards(hand);
+            ui.printMsg(hand.toString() + "\n");
         }
     }
 

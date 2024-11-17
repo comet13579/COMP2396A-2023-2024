@@ -52,20 +52,9 @@ public class BigTwoGUI implements CardGameUI {
         playButton = new JButton("Play");
         passButton = new JButton("Pass");
         
-    playButton.addActionListener(e -> {
-        if (getSelected().length > 0) {
-            game.makeMove(activePlayer, getSelected());
-            Arrays.fill(selected, false);
-        }
-    });
-    
-    passButton.addActionListener(e -> {
-        game.makeMove(activePlayer, null);
-        Arrays.fill(selected, false);
-    });
+        playButton.addActionListener(new PlayButtonListner());
+        passButton.addActionListener(new PassButtonListener());
 
-        
-        
         buttonPanel.add(playButton);
         buttonPanel.add(passButton);
         
@@ -101,7 +90,7 @@ public class BigTwoGUI implements CardGameUI {
         frame.add(buttonPanel, BorderLayout.SOUTH);
         
         // Set frame properties
-        frame.setMinimumSize(new Dimension(800, 600));
+        frame.setMinimumSize(new Dimension(800, 780));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         
@@ -111,32 +100,36 @@ public class BigTwoGUI implements CardGameUI {
         private static final int CARD_WIDTH = 73;
         private static final int CARD_HEIGHT = 97;
         private static final int CARD_OVERLAP = 20;
+        private static final int CARD_X = 120;
+        private static final int CARD_Y = 30;
         
         public BigTwoPanel() {
-            addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if (activePlayer >= 0) {
-                        int x = e.getX();
-                        int y = e.getY();
-                        int playerY = activePlayer * (CARD_HEIGHT + 20) + 30;
-                        
-                        // Check if click is in active player's row
-                        if (y >= playerY && y <= playerY + CARD_HEIGHT) {
-                            CardList cards = game.getPlayerList().get(activePlayer).getCardsInHand();
-                            // Check cards from right to left for better overlap handling
-                            for (int i = cards.size() - 1; i >= 0; i--) {
-                                int cardX = 70 + (i * CARD_OVERLAP);
-                                if (x >= cardX && x <= cardX + CARD_WIDTH) {
-                                    selected[i] = !selected[i];
-                                    repaint();
-                                    break;
-                                }
+            addMouseListener(new panelMouseAdapter());
+        }
+
+        private class panelMouseAdapter extends MouseAdapter {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (activePlayer >= 0) {
+                    int x = e.getX();
+                    int y = e.getY();
+                    int playerY = activePlayer * (CARD_HEIGHT + CARD_Y) + CARD_Y;
+                    
+                    // Check if click is in active player's row
+                    if (y >= playerY && y <= playerY + CARD_HEIGHT) {
+                        CardList cards = game.getPlayerList().get(activePlayer).getCardsInHand();
+                        // Check cards from right to left for better overlap handling
+                        for (int i = cards.size() - 1; i >= 0; i--) {
+                            int cardX = CARD_X + (i * CARD_OVERLAP);
+                            if (x >= cardX && x <= cardX + CARD_WIDTH) {
+                                selected[i] = !selected[i];
+                                repaint();
+                                break;
                             }
                         }
                     }
                 }
-            });
+            }
         }
 
         @Override
@@ -145,18 +138,19 @@ public class BigTwoGUI implements CardGameUI {
             
             // Draw players' cards
             for (int i = 0; i < game.getPlayerList().size(); i++) {
-                int y = i * (CARD_HEIGHT + 20);
+                int y = i * (CARD_HEIGHT + CARD_Y);
                 
                 // Draw player name and avatar
                 g.drawString(game.getPlayerList().get(i).getName(), 10, y + 20);
-                g.drawRect(10, y + 30, 50, 50); // Simple avatar placeholder
+                Image icon = new ImageIcon("icons/" + i + ".jpg").getImage();
+                g.drawImage(icon, 10, y + CARD_Y, 90, 90, null);
                 
                 // Draw cards
-                int x = 70;
+                int x = CARD_X;
                 CardList cards = game.getPlayerList().get(i).getCardsInHand();
                 
                 for (int j = 0; j < cards.size(); j++) {
-                    int cardY = y + 30;
+                    int cardY = y + CARD_Y;
                     if (i == activePlayer && selected[j]) {
                         cardY -= 20; // Raise selected cards
                     }
@@ -172,32 +166,25 @@ public class BigTwoGUI implements CardGameUI {
             // Draw last hand on table
             if (!game.getHandsOnTable().isEmpty()) {
                 Hand lastHand = game.getHandsOnTable().get(game.getHandsOnTable().size() - 1);
-                int tableY = 4 * (CARD_HEIGHT + 20);
-                g.drawString("Last played by: " + lastHand.getPlayer().getName(), 10, tableY + 20);
+                int tableY = 4 * (CARD_HEIGHT + CARD_Y);
+                g.drawString("Last played by: " + lastHand.getPlayer().getName(), 10, tableY + CARD_Y);
                 
-                int x = 70;
+                int x = CARD_X;
                 for (int i = 0; i < lastHand.size(); i++) {
-                    drawCard(g, lastHand.getCard(i), x + (i * CARD_OVERLAP), tableY + 30);
+                    drawCard(g, lastHand.getCard(i), x + (i * CARD_OVERLAP), tableY + CARD_Y + 10);
                 }
             }
         }
         
         private void drawCard(Graphics g, Card card, int x, int y) {
-            g.setColor(Color.WHITE);
-            g.fillRect(x, y, CARD_WIDTH, CARD_HEIGHT);
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, CARD_WIDTH, CARD_HEIGHT);
-            g.drawString(card.toString(), x + 5, y + 20);
+            Image cardImage = new ImageIcon("cards/" + card.getSuit() + card.getRank() + ".gif").getImage();
+            g.drawImage(cardImage, x, y, CARD_WIDTH, CARD_HEIGHT, null);
         }
         
         private void drawCardBack(Graphics g, int x, int y) {
-            g.setColor(Color.LIGHT_GRAY);
-            g.fillRect(x, y, CARD_WIDTH, CARD_HEIGHT);
-            g.setColor(Color.BLACK);
-            g.drawRect(x, y, CARD_WIDTH, CARD_HEIGHT);
+            Image back = new ImageIcon("cards/back.gif").getImage();
+            g.drawImage(back, x, y, CARD_WIDTH, CARD_HEIGHT, null);
         }
-        
-
     }
     
     @Override
@@ -280,6 +267,24 @@ public class BigTwoGUI implements CardGameUI {
             }
         }
         return selectedCards;
+    }
+
+    private class PlayButtonListner implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e){
+            if (getSelected().length > 0) {
+                game.makeMove(activePlayer, getSelected());
+                Arrays.fill(selected, false);
+            }
+        }
+    }
+
+    private class PassButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            game.makeMove(activePlayer, null);
+            Arrays.fill(selected, false);
+        }
     }
     
     private class RestartMenuItemListener implements ActionListener {
