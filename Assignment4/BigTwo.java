@@ -209,7 +209,7 @@ public class BigTwo {
                 break;
             }
         }
-    
+        
         playerList.get(currentPlayerIdx).sortCardsInHand();
         ui.repaint();
         ui.promptActivePlayer();

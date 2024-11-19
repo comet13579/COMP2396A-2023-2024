@@ -3,9 +3,15 @@ import java.awt.event.*;
 import java.util.Arrays;
 import javax.swing.*;
 
+/**
+ * The BigTwoGUI class implements the CardGameUI interface. 
+ * It is used to build a GUI for the Big Two card game and handle all user actions.
+ * 
+ * @author Sonny Wong
+ */
 public class BigTwoGUI implements CardGameUI {
-    private BigTwo game;
-    private boolean[] selected;
+    private final BigTwo game;
+    private final boolean[] selected;
     private int activePlayer;
     private JFrame frame;
     private BigTwoPanel bigTwoPanel;
@@ -16,7 +22,11 @@ public class BigTwoGUI implements CardGameUI {
     private JTextField chatInput;
     private JMenuItem restartMenuItem;
     private JMenuItem quitMenuItem;
-    
+
+    /**
+     * a constructor for creating a BigTwoGUI.
+     * @param game BigTwo card game
+     */
     public BigTwoGUI(BigTwo game) {
         this.game = game;
         selected = new boolean[13];
@@ -96,6 +106,114 @@ public class BigTwoGUI implements CardGameUI {
         
     }
     
+    /**
+     * a method for setting the index of the active player (i.e., the player having control of the GUI).
+     * @param activePlayer the index of the active player
+     */
+    @Override
+    public void setActivePlayer(int activePlayer) {
+        this.activePlayer = activePlayer;
+        if (activePlayer >= 0) {
+            enable();
+        } else {
+            disable();
+        }
+        frame.repaint();
+    }
+    
+    /**
+     * a method for repainting the GUI.
+     */
+    @Override
+    public void repaint() {
+        frame.repaint();
+    }
+    
+    /**
+     * a method for printing the specified string to the message area of the GUI.
+     * @param msg the string to be printed
+     */
+    @Override
+    public void printMsg(String msg) {
+        msgArea.append(msg + "\n");
+    }
+    
+    /**
+     * a method for clearing the message area of the GUI.
+     */
+    @Override
+    public void clearMsgArea() {
+        msgArea.setText("");
+    }
+
+    /**
+     * a method for resetting the GUI. 
+     */
+    @Override
+    public void reset() {
+        // First clear all UI elements
+        clearMsgArea();
+        chatArea.setText("");
+        chatInput.setText("");
+        Arrays.fill(selected, false);
+        
+        // Create and shuffle new deck
+        BigTwoDeck deck = new BigTwoDeck();
+        deck.shuffle();
+        
+        // Reset game state
+        game.getPlayerList().forEach(player -> player.removeAllCards());
+        game.start(deck);
+        
+        // Refresh the UI
+        repaint();
+    }
+    
+    /**
+     * a method for enabling user interactions with the GUI.
+     */
+    @Override
+    public void enable() {
+        playButton.setEnabled(true);
+        passButton.setEnabled(true);
+        chatInput.setEnabled(true);
+        bigTwoPanel.setEnabled(true);
+    }
+    
+    /**
+     * a method for disabling user interactions with the GUI.
+     */
+    @Override
+    public void disable() {
+        playButton.setEnabled(false);
+        passButton.setEnabled(false);
+        chatInput.setEnabled(false);
+        bigTwoPanel.setEnabled(false);
+    }
+    
+    /**
+     * a method for prompting the active player to select cards and make his/her move. 
+     * A message should be displayed in the message area showing it is the active player’s turn.
+     */
+    @Override
+    public void promptActivePlayer() {
+        printMsg(game.getPlayerList().get(activePlayer).getName() + "'s turn:");
+    }
+    
+    private int[] getSelected() {
+        int count = 0;
+        for (boolean b : selected) if (b) count++;
+        
+        int[] selectedCards = new int[count];
+        int idx = 0;
+        for (int i = 0; i < selected.length; i++) {
+            if (selected[i]) {
+                selectedCards[idx++] = i;
+            }
+        }
+        return selectedCards;
+    }
+
     private class BigTwoPanel extends JPanel {
         private static final int CARD_WIDTH = 73;
         private static final int CARD_HEIGHT = 97;
@@ -185,88 +303,6 @@ public class BigTwoGUI implements CardGameUI {
             Image back = new ImageIcon("cards/back.gif").getImage();
             g.drawImage(back, x, y, CARD_WIDTH, CARD_HEIGHT, null);
         }
-    }
-    
-    @Override
-    public void setActivePlayer(int activePlayer) {
-        this.activePlayer = activePlayer;
-        if (activePlayer >= 0) {
-            enable();
-        } else {
-            disable();
-        }
-        frame.repaint();
-    }
-    
-    @Override
-    public void repaint() {
-        frame.repaint();
-    }
-    
-    @Override
-    public void printMsg(String msg) {
-        msgArea.append(msg + "\n");
-    }
-    
-    @Override
-    public void clearMsgArea() {
-        msgArea.setText("");
-    }
-
-    @Override
-    public void reset() {
-        // First clear all UI elements
-        clearMsgArea();
-        chatArea.setText("");
-        chatInput.setText("");
-        Arrays.fill(selected, false);
-        
-        // Create and shuffle new deck
-        BigTwoDeck deck = new BigTwoDeck();
-        deck.shuffle();
-        
-        // Reset game state
-        game.getPlayerList().forEach(player -> player.removeAllCards());
-        game.start(deck);
-        
-        // Refresh the UI
-        repaint();
-    }
-    
-    
-    @Override
-    public void enable() {
-        playButton.setEnabled(true);
-        passButton.setEnabled(true);
-        chatInput.setEnabled(true);
-        bigTwoPanel.setEnabled(true);
-    }
-    
-    @Override
-    public void disable() {
-        playButton.setEnabled(false);
-        passButton.setEnabled(false);
-        chatInput.setEnabled(false);
-        bigTwoPanel.setEnabled(false);
-    }
-    
-    @Override
-    public void promptActivePlayer() {
-        printMsg(game.getPlayerList().get(activePlayer).getName() + "'s turn:");
-    }
-    
-    private int[] getSelected() {
-        int count = 0;
-        for (boolean b : selected) if (b) count++;
-        
-        int[] selectedCards = new int[count];
-        int idx = 0;
-        for (int i = 0; i < selected.length; i++) {
-            if (selected[i]) {
-                selectedCards[idx++] = i;
-            }
-        }
-        return selectedCards;
     }
 
     private class PlayButtonListner implements ActionListener {
