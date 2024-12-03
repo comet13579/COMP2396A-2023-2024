@@ -105,8 +105,10 @@ public class BigTwoClient {
                 break;
             case CardGameMessage.MOVE:
                 this.game.checkMove(message.getPlayerID(), (int[]) message.getData());
+                break;
             case CardGameMessage.MSG:
                 this.gui.appendChatArea((String) message.getData());
+                break;
             default:
                 break;
         }

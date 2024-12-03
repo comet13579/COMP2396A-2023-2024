@@ -137,6 +137,7 @@ public class BigTwo {
         }
         this.ui = new BigTwoGUI(this);
         this.client = new BigTwoClient(this, ui);
+        handsOnTable = new ArrayList<Hand>();
         client.setServerIP("127.0.0.1");
         client.setServerPort(2396);
         client.setPlayerName(JOptionPane.showInputDialog("Enter your name:"));
@@ -199,8 +200,8 @@ public class BigTwo {
         for (i = 0; i < 4; i++) {
             playerList.get(i).removeAllCards();
         }
-    
-        handsOnTable = new ArrayList<>();
+
+        handsOnTable.clear();
     
         for (i = 0; i < 4; i++) {
             for (int j = 0; j < 13; j++) {
@@ -228,7 +229,10 @@ public class BigTwo {
      * @param cardIdx   the list of indices of the cards selected by the player
      */
     public void checkMove(int playerIdx, int[] cardIdx) {
-        MoveValidator validator = new MoveValidator(ui, handsOnTable, playerList);
+        if (handsOnTable == null) {
+            System.out.println("handsOnTable is null");
+        }
+        MoveValidator validator = new MoveValidator(this.ui, this.handsOnTable, this.playerList);
         if (validator.validateMove(playerIdx, cardIdx)) {
             nextPlayer();
             playerList.get(currentPlayerIdx).sortCardsInHand();
