@@ -20,7 +20,7 @@ public class BigTwoGUI implements CardGameUI {
     private JTextArea msgArea;
     private JTextArea chatArea;
     private JTextField chatInput;
-    private JMenuItem restartMenuItem;
+    private JMenuItem connectMenuItem;
     private JMenuItem quitMenuItem;
 
     /**
@@ -42,13 +42,13 @@ public class BigTwoGUI implements CardGameUI {
         // Create menu bar
         JMenuBar menuBar = new JMenuBar();
         JMenu gameMenu = new JMenu("Game");
-        restartMenuItem = new JMenuItem("Restart");
+        connectMenuItem = new JMenuItem("Connect");
         quitMenuItem = new JMenuItem("Quit");
         
-        restartMenuItem.addActionListener(new RestartMenuItemListener());
+        connectMenuItem.addActionListener(new ConnectMenuItemListener());
         quitMenuItem.addActionListener(new QuitMenuItemListener());
         
-        gameMenu.add(restartMenuItem);
+        gameMenu.add(connectMenuItem);
         gameMenu.add(quitMenuItem);
         menuBar.add(gameMenu);
         frame.setJMenuBar(menuBar);
@@ -84,6 +84,7 @@ public class BigTwoGUI implements CardGameUI {
             String msg = chatInput.getText();
             if (!msg.isEmpty()) {
                 chatArea.append(game.getPlayerList().get(activePlayer).getName() + ": " + msg + "\n");
+                game.sendChat(msg);
                 chatInput.setText("");
             }
         });
@@ -146,6 +147,10 @@ public class BigTwoGUI implements CardGameUI {
         msgArea.setText("");
     }
 
+    public void appendChatArea(String msg) {
+        chatArea.append(msg + "\n");
+    }
+
     /**
      * a method for resetting the GUI. 
      */
@@ -161,9 +166,8 @@ public class BigTwoGUI implements CardGameUI {
         BigTwoDeck deck = new BigTwoDeck();
         deck.shuffle();
         
-        // Reset game state
-        game.getPlayerList().forEach(player -> player.removeAllCards());
-        game.start(deck);
+        //connect to server
+        game.connect();
         
         // Refresh the UI
         repaint();
@@ -323,7 +327,7 @@ public class BigTwoGUI implements CardGameUI {
         }
     }
     
-    private class RestartMenuItemListener implements ActionListener {
+    private class ConnectMenuItemListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             reset();

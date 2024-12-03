@@ -16,6 +16,7 @@ public class BigTwo {
     private ArrayList<Hand> handsOnTable;
     private int currentPlayerIdx;
     private BigTwoGUI ui;
+    private BigTwoClient client;
 
     private void nextPlayer() {
         currentPlayerIdx = (currentPlayerIdx + 1) % 4;
@@ -133,7 +134,8 @@ public class BigTwo {
         for (int i = 0; i < numberOfPlayers; i++) {
             playerList.add(new CardGamePlayer());
         }
-        ui = new BigTwoGUI(this);
+        this.ui = new BigTwoGUI(this);
+        this.client = new BigTwoClient(this, ui);
     }
 
     /**
@@ -251,6 +253,7 @@ public class BigTwo {
      */
     public void makeMove(int playerIdx, int[] cardIdx) {
         checkMove(playerIdx, cardIdx);
+        client.sendMessage(new CardGameMessage(CardGameMessage.MOVE, playerIdx, cardIdx));
     }
 
     /**
@@ -264,6 +267,26 @@ public class BigTwo {
             }
         }
         return false;
+    }
+
+    public void connect() {
+        client.connect();
+    }
+
+    public void updatePlayerNames(String[] playerNames){
+        for (int i = 0; i < 4; i++) {
+            if (playerNames[i] != null) {
+                playerList.get(i).setName(playerNames[i]);
+            }
+        }
+    }
+
+    public void addPlayerNames(String name, int index){
+        playerList.get(index).setName(name);
+    }
+
+    public void sendChat(String msg){
+        client.sendMessage(new CardGameMessage(CardGameMessage.MSG,-1,msg));
     }
 
     /**
