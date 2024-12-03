@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Arrays;
+import javax.swing.JOptionPane;
 
 /**
  * The BigTwo class implements the CardGame interface and is used to model a Big Two card
@@ -136,6 +137,9 @@ public class BigTwo {
         }
         this.ui = new BigTwoGUI(this);
         this.client = new BigTwoClient(this, ui);
+        client.setServerIP("127.0.0.1");
+        client.setServerPort(2396);
+        client.setPlayerName(JOptionPane.showInputDialog("Enter your name:"));
     }
 
     /**
@@ -252,7 +256,6 @@ public class BigTwo {
      * @param cardIdx   the list of indices of the cards selected by the player
      */
     public void makeMove(int playerIdx, int[] cardIdx) {
-        checkMove(playerIdx, cardIdx);
         client.sendMessage(new CardGameMessage(CardGameMessage.MOVE, playerIdx, cardIdx));
     }
 
@@ -271,6 +274,10 @@ public class BigTwo {
 
     public void connect() {
         client.connect();
+    }
+
+    public int getPlayerIDclient() {
+        return client.getPlayerID();
     }
 
     public void updatePlayerNames(String[] playerNames){

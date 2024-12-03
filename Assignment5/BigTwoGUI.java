@@ -83,12 +83,12 @@ public class BigTwoGUI implements CardGameUI {
         chatInput.addActionListener(e -> {
             String msg = chatInput.getText();
             if (!msg.isEmpty()) {
-                chatArea.append(game.getPlayerList().get(activePlayer).getName() + ": " + msg + "\n");
                 game.sendChat(msg);
                 chatInput.setText("");
             }
         });
         chatInput.setSize(20,5);
+        chatInput.setEnabled(true);
         
         // Create right panel for messages and chat
         JPanel rightPanel = new JPanel();
@@ -114,7 +114,7 @@ public class BigTwoGUI implements CardGameUI {
     @Override
     public void setActivePlayer(int activePlayer) {
         this.activePlayer = activePlayer;
-        if (activePlayer >= 0) {
+        if (activePlayer == game.getPlayerIDclient()) {
             enable();
         } else {
             disable();
@@ -180,7 +180,6 @@ public class BigTwoGUI implements CardGameUI {
     public void enable() {
         playButton.setEnabled(true);
         passButton.setEnabled(true);
-        chatInput.setEnabled(true);
         bigTwoPanel.setEnabled(true);
     }
     
@@ -191,7 +190,6 @@ public class BigTwoGUI implements CardGameUI {
     public void disable() {
         playButton.setEnabled(false);
         passButton.setEnabled(false);
-        chatInput.setEnabled(false);
         bigTwoPanel.setEnabled(false);
     }
     
@@ -277,7 +275,7 @@ public class BigTwoGUI implements CardGameUI {
                         cardY -= 20; // Raise selected cards
                     }
                     
-                    if (i == activePlayer) {
+                    if (i == game.getPlayerIDclient()) {
                         drawCard(g, cards.getCard(j), x + (j * CARD_OVERLAP), cardY);
                     } else {
                         drawCardBack(g, x + (j * CARD_OVERLAP), cardY);

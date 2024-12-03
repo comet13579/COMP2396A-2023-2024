@@ -38,6 +38,10 @@ public class BigTwoClient {
         return this.playerName;
     }
 
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+    }
+
     public String getServerIP() {
         return this.serverIP;
     }
@@ -48,6 +52,10 @@ public class BigTwoClient {
 
     public int getServerPort() {
         return this.serverPort;
+    }
+
+    public void setServerPort(int serverPort) {
+        this.serverPort = serverPort;
     }
 
     public void connect() {
@@ -67,17 +75,19 @@ public class BigTwoClient {
         switch (message.getType()) {
             case CardGameMessage.PLAYER_LIST:
                 this.game.updatePlayerNames((String[]) message.getData());
-                this.sendMessage(new CardGameMessage(CardGameMessage.JOIN,-1,-1));
+                this.playerID = message.getPlayerID();
                 this.gui.printMsg("Connected to the server successfully!");
+                sendMessage(new CardGameMessage(CardGameMessage.JOIN,-1,this.playerName));
                 break;
             case CardGameMessage.JOIN:
                 this.game.addPlayerNames((String) message.getData(), message.getPlayerID());
                 if (message.getPlayerID() == this.playerID) {
-                    sendMessage(new GameMessage(CardGameMessage.READY,-1,null));
-                    this.gui.printMsg("You joined the game.");
+                    sendMessage(new CardGameMessage(CardGameMessage.READY,-1,null));
+                    this.gui.printMsg("You are player " + message.getPlayerID() + ".");
                 } else {
-                    this.gui.printMsg("Player " + message.getPlayerID() + " joined the game.");
+                    this.gui.printMsg("Player " + message.getPlayerID() + " has joined the game.");
                 }
+                gui.repaint();
                 break;
             case CardGameMessage.FULL:
                 this.gui.printMsg("Server is full. Please try again later or reconnect to another server.");
@@ -86,7 +96,6 @@ public class BigTwoClient {
                 this.playerName = "";
                 this.game.addPlayerNames("", message.getPlayerID());
                 break;
-                
             case CardGameMessage.READY:
                 this.gui.printMsg("Player " + message.getPlayerID() + " is ready.");
                 break;
