@@ -191,7 +191,14 @@ public class BigTwoClient implements NetworkGame{
             this.gui.printMsg("Error in sending message to server.");
         }
     }
-
+    /**
+     * an inner class that implements the Runnable interface. You
+     * should implement the run() method from the Runnable interface and create a thread
+     * with an instance of this class as its job in the connect() method from the NetworkGame
+     * interface for receiving messages from the game server. Upon receiving a message, the
+     * parseMessage() method from the NetworkGame interface should be called to parse the
+     * messages accordingly.
+     */
     private class ServerHandler implements Runnable {
         private ObjectInputStream reader = null;
         public ServerHandler() {
