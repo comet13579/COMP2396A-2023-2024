@@ -11,13 +11,13 @@ import javax.swing.JOptionPane;
  * @author Sonny Wong
  */
 public class BigTwo {
-    private int numberOfPlayers;
+    private final int numberOfPlayers;
     private Deck deck;
-    private ArrayList<CardGamePlayer> playerList;
-    private ArrayList<Hand> handsOnTable;
+    private final ArrayList<CardGamePlayer> playerList;
+    private final ArrayList<Hand> handsOnTable;
     private int currentPlayerIdx;
-    private BigTwoGUI ui;
-    private BigTwoClient client;
+    private final BigTwoGUI ui;
+    private final BigTwoClient client;
 
     private void nextPlayer() {
         currentPlayerIdx = (currentPlayerIdx + 1) % 4;
@@ -137,10 +137,14 @@ public class BigTwo {
         }
         this.ui = new BigTwoGUI(this);
         this.client = new BigTwoClient(this, ui);
-        handsOnTable = new ArrayList<Hand>();
+        handsOnTable = new ArrayList<>();
         client.setServerIP("127.0.0.1");
         client.setServerPort(2396);
-        client.setPlayerName(JOptionPane.showInputDialog("Enter your name:"));
+        String name = JOptionPane.showInputDialog("Enter your name:");
+        if (name == null || name.equals("")) {
+            name = "Nameless";
+        }
+        client.setPlayerName(name);
     }
 
     /**
@@ -184,6 +188,28 @@ public class BigTwo {
     }
 
     /**
+     * a method for retrieving the index of this client (local).
+     * @return the index of this client
+     */
+    public int getPlayerIDclient() {
+        return client.getPlayerID();
+    }
+
+    /**
+     * a method of counting how many players are in the game.
+     * @return the number of players in the game
+     */
+    public int getPlayerCount() {
+        int count = 0;
+        for (int i = 0; i < playerList.size(); i++) {
+            if (playerList.get(i).getName() != null && !playerList.get(i).getName().equals("") && !playerList.get(i).getName().equals("Player" + i)) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
      * a method for starting/restarting the game with a given
      * shuffled deck of cards. You should (i) remove all the cards from the players as well as
      * from the table; (ii) distribute the cards to the players; (iii) identify the player who holds
@@ -195,7 +221,6 @@ public class BigTwo {
      * @param deck the deck of cards to be used
      */
     public void start(Deck deck) {
-        ui.enable();
         int i;
         for (i = 0; i < 4; i++) {
             playerList.get(i).removeAllCards();
@@ -217,7 +242,10 @@ public class BigTwo {
             }
         }
         
-        playerList.get(currentPlayerIdx).sortCardsInHand();
+        for (i = 0; i < 4; i++) {
+            playerList.get(i).sortCardsInHand();
+        }
+
         ui.repaint();
         ui.promptActivePlayer();
     }
@@ -238,16 +266,19 @@ public class BigTwo {
             playerList.get(currentPlayerIdx).sortCardsInHand();
         }
         if (endOfGame()) {
-            ui.printMsg("Game ends\n");
+            String displayEndMessage = "";
+            displayEndMessage += "Game ends\n";
             for (int i = 0; i < 4; i++) {
                 if (playerList.get(i).getNumOfCards() != 0) {
-                    ui.printMsg(playerList.get(i).getName() + " looses the game.\n");
+                    displayEndMessage += playerList.get(i).getName() + " looses the game.\n";
                 }
                 else {
-                    ui.printMsg(playerList.get(i).getName() + " win the game\n");
+                    displayEndMessage += playerList.get(i).getName() + " wins the game.\n";
                 }
             }
+            JOptionPane.showMessageDialog(null, displayEndMessage);
             ui.disable();
+            client.sendMessage(new CardGameMessage(CardGameMessage.READY,-1,null));
         }
     }
 
@@ -276,14 +307,24 @@ public class BigTwo {
         return false;
     }
 
+
+    /**
+     * a method for connecting to the server by calling the connect() method of the client
+     */
     public void connect() {
-        client.connect();
+        EnterIPOption enterIP = new EnterIPOption();
+        if (enterIP.getPort() != -1){
+            client.setServerIP(enterIP.getIP());
+            client.setServerPort(enterIP.getPort());
+            client.connect();
+            client.sendMessage(new CardGameMessage(CardGameMessage.START, -1, null));
+        }
     }
 
-    public int getPlayerIDclient() {
-        return client.getPlayerID();
-    }
-
+    /**
+     * a method for updating PlayerNames in playerList
+     * @param playerNames the array of player names
+     */
     public void updatePlayerNames(String[] playerNames){
         for (int i = 0; i < 4; i++) {
             if (playerNames[i] != null) {
@@ -292,25 +333,26 @@ public class BigTwo {
         }
     }
 
+    /**
+     * a method for adding player names to the playerList of specific index
+     */
     public void addPlayerNames(String name, int index){
         playerList.get(index).setName(name);
     }
 
+    /**
+     * a method for sending chats to the server
+     */
     public void sendChat(String msg){
         client.sendMessage(new CardGameMessage(CardGameMessage.MSG,-1,msg));
     }
 
     /**
-     * – a method for starting a Big Two card game. It should (i)
-     * create a Big Two card game, (ii) create and shuffle a deck of cards, and (iii) start the
-     * game with the deck of cards.
+     * – a method for starting a Big Two card game. 
      * @param args not used
      */
     public static void main(String[] args) {
-        BigTwo game = new BigTwo();
-        Deck deck = new BigTwoDeck();
-        deck.shuffle();
-        game.start(deck);
+        new BigTwo();
     }
 
     /**

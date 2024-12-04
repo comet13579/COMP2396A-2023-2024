@@ -69,14 +69,18 @@ public class BigTwoGUI implements CardGameUI {
         buttonPanel.add(passButton);
         
         // Create message area
-        msgArea = new JTextArea(20, 20);
+        msgArea = new JTextArea(20, 30);
         msgArea.setEditable(false);
         JScrollPane msgScroll = new JScrollPane(msgArea);
+        msgScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        msgScroll.getVerticalScrollBar().setValue(msgScroll.getVerticalScrollBar().getMaximum());
         
         // Create chat area
-        chatArea = new JTextArea(40, 20);
+        chatArea = new JTextArea(40, 30);
         chatArea.setEditable(false);
         JScrollPane chatScroll = new JScrollPane(chatArea);
+        chatScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+        chatScroll.getVerticalScrollBar().setValue(chatScroll.getVerticalScrollBar().getMaximum());
         
         // Create chat input
         chatInput = new JTextField(20);
@@ -104,7 +108,7 @@ public class BigTwoGUI implements CardGameUI {
         frame.setMinimumSize(new Dimension(800, 780));
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        
+        disable();
     }
     
     /**
@@ -137,6 +141,7 @@ public class BigTwoGUI implements CardGameUI {
     @Override
     public void printMsg(String msg) {
         msgArea.append(msg + "\n");
+        msgArea.setCaretPosition(msgArea.getDocument().getLength() - 1);
     }
     
     /**
@@ -146,9 +151,14 @@ public class BigTwoGUI implements CardGameUI {
     public void clearMsgArea() {
         msgArea.setText("");
     }
-
+    
+    /**
+     * a method for adding chat messages into chatbox.
+     * @param msg
+     */
     public void appendChatArea(String msg) {
         chatArea.append(msg + "\n");
+        chatArea.setCaretPosition(chatArea.getDocument().getLength() - 1);
     }
 
     /**
