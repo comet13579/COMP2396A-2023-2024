@@ -118,9 +118,11 @@ public class BigTwoClient implements NetworkGame{
             sendMessage(new CardGameMessage(-1,CardGameMessage.JOIN,""));
             Thread thread = new Thread(new ServerHandler());
             thread.start();
+            this.gui.disableConnect();
         } catch(IOException ex) {
             gui.printMsg("Error connecting to server!");
 	 	}
+        
     }
 
     /**

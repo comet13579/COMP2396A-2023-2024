@@ -44,6 +44,8 @@ public class BigTwoGUI implements CardGameUI {
         JMenu gameMenu = new JMenu("Game");
         connectMenuItem = new JMenuItem("Connect");
         quitMenuItem = new JMenuItem("Quit");
+        connectMenuItem.setEnabled(true);
+        quitMenuItem.setEnabled(true);
         
         connectMenuItem.addActionListener(new ConnectMenuItemListener());
         quitMenuItem.addActionListener(new QuitMenuItemListener());
@@ -201,6 +203,13 @@ public class BigTwoGUI implements CardGameUI {
         playButton.setEnabled(false);
         passButton.setEnabled(false);
         bigTwoPanel.setEnabled(false);
+    }
+
+    /**
+     * a method for disabling the connect menu item.
+     */
+    public void disableConnect(){
+        connectMenuItem.setEnabled(false);
     }
     
     /**
