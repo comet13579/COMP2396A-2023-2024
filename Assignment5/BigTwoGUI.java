@@ -86,13 +86,7 @@ public class BigTwoGUI implements CardGameUI {
         
         // Create chat input
         chatInput = new JTextField(20);
-        chatInput.addActionListener(e -> {
-            String msg = chatInput.getText();
-            if (!msg.isEmpty()) {
-                game.sendChat(msg);
-                chatInput.setText("");
-            }
-        });
+        chatInput.addActionListener(new ChatInputListener());
         chatInput.setSize(20,5);
         chatInput.setEnabled(true);
         
@@ -355,6 +349,17 @@ public class BigTwoGUI implements CardGameUI {
         @Override
         public void actionPerformed(ActionEvent e) {
             System.exit(0);
+        }
+    }
+
+    private class ChatInputListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String msg = chatInput.getText();
+            if (!msg.isEmpty()) {
+                game.sendChat(msg);
+                chatInput.setText("");
+            }
         }
     }
 }

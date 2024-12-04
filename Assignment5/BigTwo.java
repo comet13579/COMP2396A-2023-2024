@@ -277,8 +277,8 @@ public class BigTwo {
                 }
             }
             JOptionPane.showMessageDialog(null, displayEndMessage);
-            ui.disable();
             client.sendMessage(new CardGameMessage(CardGameMessage.READY,-1,null));
+            ui.disable();
         }
     }
 

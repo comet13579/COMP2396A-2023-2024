@@ -135,14 +135,14 @@ public class BigTwoClient implements NetworkGame{
     @Override
     public void parseMessage(GameMessage message) {
         switch (message.getType()) {
-            case CardGameMessage.PLAYER_LIST:
+            case CardGameMessage.PLAYER_LIST -> {
                 this.game.updatePlayerNames((String[]) message.getData());
                 this.playerID = message.getPlayerID();
                 this.gui.printMsg("Connected to the server successfully!");
                 sendMessage(new CardGameMessage(CardGameMessage.JOIN,-1,this.playerName));
-                break;
+            }
 
-            case CardGameMessage.JOIN:
+            case CardGameMessage.JOIN -> {
                 this.game.addPlayerNames((String) message.getData(), message.getPlayerID());
                 if (message.getPlayerID() == this.playerID) {
                     sendMessage(new CardGameMessage(CardGameMessage.READY,-1,null));
@@ -151,13 +151,10 @@ public class BigTwoClient implements NetworkGame{
                     this.gui.printMsg( (String) message.getData() + " has joined the game.");
                 }
                 gui.repaint();
-                break;
+            }
+            case CardGameMessage.FULL -> this.gui.printMsg("Server is full. Please try again later or reconnect to another server.");
 
-            case CardGameMessage.FULL:
-                this.gui.printMsg("Server is full. Please try again later or reconnect to another server.");
-                break;
-
-            case CardGameMessage.QUIT:
+            case CardGameMessage.QUIT -> {
                 this.playerName = "";
                 this.game.addPlayerNames("", message.getPlayerID());
                 this.gui.printMsg(this.game.getPlayerList().get(message.getPlayerID()).getName() + " has left the game.");
@@ -167,24 +164,16 @@ public class BigTwoClient implements NetworkGame{
                     sendMessage(new CardGameMessage(CardGameMessage.READY, -1, null));
                     this.gui.printMsg("Game stopped, waiting for new players to restart");
                 }
-                break;
-
-            case CardGameMessage.READY:
-                this.gui.printMsg("Player " + this.game.getPlayerList().get(message.getPlayerID()).getName() + " is ready.");
-                break;
-                
-            case CardGameMessage.START:
+            }
+            case CardGameMessage.READY -> this.gui.printMsg("Player " + this.game.getPlayerList().get(message.getPlayerID()).getName() + " is ready.");
+            
+            case CardGameMessage.START -> {
                 this.game.start((BigTwoDeck) message.getData());
                 this.gui.printMsg("Game started.");
-                break;
-
-            case CardGameMessage.MOVE:
-                this.game.checkMove(message.getPlayerID(), (int[]) message.getData());
-                break;
-
-            case CardGameMessage.MSG:
-                this.gui.appendChatArea((String) message.getData());
-                break;
+            }
+            case CardGameMessage.MOVE -> this.game.checkMove(message.getPlayerID(), (int[]) message.getData());
+            
+            case CardGameMessage.MSG -> this.gui.appendChatArea((String) message.getData());
         }
     }
 
@@ -221,9 +210,9 @@ public class BigTwoClient implements NetworkGame{
                     parseMessage(message);
                 }
             }
-            catch (Exception ex) {
+            catch (IOException | ClassNotFoundException ex) {
                 gui.printMsg("Error in receiving messages from the server, disconnecting...");
             }
-        }
+        }    
     }
 }

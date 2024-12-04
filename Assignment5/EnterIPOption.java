@@ -32,7 +32,7 @@ public class EnterIPOption {
                     port = -1;
                 }
             }
-            catch (Exception e) {
+            catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(null, "Invalid port number");
                 port = -1;
             }
@@ -42,7 +42,6 @@ public class EnterIPOption {
             port = -1;
         }
     }
-
     /**
      * Getter methods for the IP address and port number.
      * @return IP address and port number
@@ -65,8 +64,8 @@ public class EnterIPOption {
     }
 
     private void printIPPort(){
-        String ip = getIP();
-        int port = getPort();
+        ip = getIP();
+        port = getPort();
         System.out.println("IP: " + ip);
         System.out.println("Port: " + port);
     }
