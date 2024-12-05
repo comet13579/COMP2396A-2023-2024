@@ -145,6 +145,7 @@ public class BigTwo {
             name = "Nameless";
         }
         client.setPlayerName(name);
+        connect();
     }
 
     /**
@@ -311,7 +312,7 @@ public class BigTwo {
     /**
      * a method for connecting to the server by calling the connect() method of the client
      */
-    public void connect() {
+    public final void connect() {
         EnterIPOption enterIP = new EnterIPOption();
         if (enterIP.getPort() != -1){
             client.setServerIP(enterIP.getIP());

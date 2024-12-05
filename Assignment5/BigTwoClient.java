@@ -5,9 +5,9 @@ import java.net.*;
 /**
  * The BigTwoClient class implements the NetworkGame interface. It is used to model a Big
  * Two game client that is responsible for establishing a connection and communicating with
- * the Big Two game server. Below is a detailed description for the BigTwoClient class.
+ * the Big Two game server.
  * 
- * @authoor Sonny Wong
+ * @author Sonny Wong
  */
 public class BigTwoClient implements NetworkGame{
     private final BigTwo game;

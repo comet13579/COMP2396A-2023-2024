@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -274,9 +275,18 @@ public class BigTwoGUI implements CardGameUI {
                 int y = i * (CARD_HEIGHT + CARD_Y);
                 
                 // Draw player name and avatar
-                g.drawString(game.getPlayerList().get(i).getName(), 10, y + 20);
-                Image icon = new ImageIcon("icons/" + i + ".jpg").getImage();
-                g.drawImage(icon, 10, y + CARD_Y, 90, 90, null);
+                
+                if (game.getPlayerList().get(i).getName() == null || game.getPlayerList().get(i).getName().equals("") || game.getPlayerList().get(i).getName().equals("Player " + i)) {
+                    g.drawString("", 10, y + 20);
+                    Image icon = getResourceImage("/icons/-1.jpg");
+                    g.drawImage(icon, 10, y + CARD_Y, 90, 90, null);
+
+                } 
+                else {
+                    g.drawString(game.getPlayerList().get(i).getName(), 10, y + 20);
+                    Image icon = getResourceImage("/icons/" + i + ".jpg");
+                    g.drawImage(icon, 10, y + CARD_Y, 90, 90, null);
+                }
                 
                 // Draw cards
                 int x = CARD_X;
@@ -310,15 +320,31 @@ public class BigTwoGUI implements CardGameUI {
         }
         
         private void drawCard(Graphics g, Card card, int x, int y) {
-            Image cardImage = new ImageIcon("cards/" + card.getSuit() + card.getRank() + ".gif").getImage();
+            Image cardImage = getResourceImage("/cards/" + card.getSuit() + card.getRank() + ".gif");
             g.drawImage(cardImage, x, y, CARD_WIDTH, CARD_HEIGHT, null);
         }
         
         private void drawCardBack(Graphics g, int x, int y) {
-            Image back = new ImageIcon("cards/back.gif").getImage();
-            g.drawImage(back, x, y, CARD_WIDTH, CARD_HEIGHT, null);
+            Image cardImage = getResourceImage("/cards/back.gif");
+            g.drawImage(cardImage, x, y, CARD_WIDTH, CARD_HEIGHT, null);
+        }
+
+        private Image getResourceImage(String path) {
+            try {
+                URL imageURL = getClass().getResource(path);
+                if (imageURL != null) {
+                    return new ImageIcon(imageURL).getImage();
+                } else {
+                    // Fallback to file system if resource not found
+                    return new ImageIcon("." + path).getImage();
+                }
+            } catch (Exception e) {
+                System.err.println("Error loading image: " + path);
+                return null;
+            }
         }
     }
+        
 
     private class PlayButtonListner implements ActionListener {
         @Override

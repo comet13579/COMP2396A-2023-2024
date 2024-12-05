@@ -66,13 +66,13 @@ public class Tester {
 
     private static void testFullHouse() {
         System.out.println("\nTesting Full House:");
-        CardList cards = new CardList();
-        cards.addCard(new Card(0, 0)); // Diamond A
-        cards.addCard(new Card(1, 0)); // Club A
-        cards.addCard(new Card(2, 0)); // Heart A
-        cards.addCard(new Card(0, 1)); // Diamond 2
-        cards.addCard(new Card(1, 1)); // Club 2
-        testHand(cards);
+        CardList cards1 = new CardList();
+        cards1.addCard(new Card(0, 5)); // Diamond A
+        cards1.addCard(new Card(1, 5)); // Club A
+        cards1.addCard(new Card(3, 5)); // Heart A
+        cards1.addCard(new Card(2, 6)); // Diamond 2
+        cards1.addCard(new Card(1, 6)); // Club 2
+        testHand(cards1);
     }
 
     private static void testQuads() {
