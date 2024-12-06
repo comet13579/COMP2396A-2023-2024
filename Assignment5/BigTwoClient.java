@@ -155,9 +155,9 @@ public class BigTwoClient implements NetworkGame{
             case CardGameMessage.FULL -> this.gui.printMsg("Server is full. Please try again later or reconnect to another server.");
 
             case CardGameMessage.QUIT -> {
+                this.gui.printMsg(this.game.getPlayerList().get(message.getPlayerID()).getName() + " has left the game.");
                 this.playerName = "";
                 this.game.addPlayerNames("", message.getPlayerID());
-                this.gui.printMsg(this.game.getPlayerList().get(message.getPlayerID()).getName() + " has left the game.");
                 gui.repaint();
                 if (this.game.getPlayerCount() == 4){
                     gui.disable();
