@@ -19,7 +19,7 @@ public class FullHouse extends Hand{
         }
         for (int i = 0; i < 5; i++) {
             if (rankCount[cards.getCard(i).getRank()] == 3) {
-                TripleRank = i;
+                TripleRank = cards.getCard(i).getRank();
                 break;
             }
         }

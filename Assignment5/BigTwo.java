@@ -318,7 +318,6 @@ public class BigTwo {
             client.setServerIP(enterIP.getIP());
             client.setServerPort(enterIP.getPort());
             client.connect();
-            client.sendMessage(new CardGameMessage(CardGameMessage.START, -1, null));
         }
     }
 

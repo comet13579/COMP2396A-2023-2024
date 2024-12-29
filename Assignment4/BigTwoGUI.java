@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.*;
+import java.net.URL;
 import java.util.Arrays;
 import javax.swing.*;
 
@@ -250,7 +251,7 @@ public class BigTwoGUI implements CardGameUI {
             }
         }
 
-        @Override
+                @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             
@@ -260,7 +261,7 @@ public class BigTwoGUI implements CardGameUI {
                 
                 // Draw player name and avatar
                 g.drawString(game.getPlayerList().get(i).getName(), 10, y + 20);
-                Image icon = new ImageIcon("icons/" + i + ".jpg").getImage();
+                Image icon = getResourceImage("/icons/" + i + ".jpg");
                 g.drawImage(icon, 10, y + CARD_Y, 90, 90, null);
                 
                 // Draw cards
@@ -273,7 +274,7 @@ public class BigTwoGUI implements CardGameUI {
                         cardY -= 20; // Raise selected cards
                     }
                     
-                    if (i == activePlayer) {
+                    if (i == game.getCurrentPlayerIdx()) {
                         drawCard(g, cards.getCard(j), x + (j * CARD_OVERLAP), cardY);
                     } else {
                         drawCardBack(g, x + (j * CARD_OVERLAP), cardY);
@@ -295,13 +296,28 @@ public class BigTwoGUI implements CardGameUI {
         }
         
         private void drawCard(Graphics g, Card card, int x, int y) {
-            Image cardImage = new ImageIcon("cards/" + card.getSuit() + card.getRank() + ".gif").getImage();
+            Image cardImage = getResourceImage("/cards/" + card.getSuit() + card.getRank() + ".gif");
             g.drawImage(cardImage, x, y, CARD_WIDTH, CARD_HEIGHT, null);
         }
         
         private void drawCardBack(Graphics g, int x, int y) {
-            Image back = new ImageIcon("cards/back.gif").getImage();
-            g.drawImage(back, x, y, CARD_WIDTH, CARD_HEIGHT, null);
+            Image cardImage = getResourceImage("/cards/back.gif");
+            g.drawImage(cardImage, x, y, CARD_WIDTH, CARD_HEIGHT, null);
+        }
+
+        private Image getResourceImage(String path) {
+            try {
+                URL imageURL = getClass().getResource(path);
+                if (imageURL != null) {
+                    return new ImageIcon(imageURL).getImage();
+                } else {
+                    // Fallback to file system if resource not found
+                    return new ImageIcon("." + path).getImage();
+                }
+            } catch (Exception e) {
+                System.err.println("Error loading image: " + path);
+                return null;
+            }
         }
     }
 

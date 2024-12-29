@@ -1,0 +1,2 @@
+JOIN and START messages are unnecessarily sent while starting up the client program (in BigTwo/BigTwoClient.connect()). (fixed)
+Keyword synchronized is not used in any method in BigTwoClient. (fixed)

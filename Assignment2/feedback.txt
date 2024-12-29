@@ -11,13 +11,13 @@ Tester does not test getXLocal() and getYLocal()
 [RegularPolygon.java]
 RegularPolygon.setVertices() does not set vertices correctly when number of sides is even.
 Local points are not in anti-clockwise manner.
-RegularPolygon.contains() failed some cases.
+RegularPolygon.contains() failed some cases. (not fixed)
 
 [Tester (RegularPolygon)]
-Tester does not test getXLocal() and getYLocal()
+Tester does not test getXLocal() and getYLocal() (fixed)
 
 [Design and Encapsulation]
-RegularPolygon.setVertices() should not be public.
+RegularPolygon.setVertices() should not be public. (fixed)
 
 [Javadoc and comments]
-Empty description for @param n in RegularPolygon.RegularPolygon(int)
+Empty description for @param n in RegularPolygon.RegularPolygon(int) (fixed)

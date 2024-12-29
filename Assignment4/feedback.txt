@@ -1,0 +1,17 @@
+Rendering of players’ cards and cards on the table: 20/20
+Implementation of card selection using mouse clicks: 17/20
+Implementation of the game message area: 5/5
+Implementation of the chat message area: 5/5
+Implementation of the chat input field: 5/5
+Implementation of the “Play” button: 5/5
+Implementation of the “Pass” button: 5/5
+Implementation of the “Restart” menu item: 5/5
+Implementation of the “Quit” menu item: 5/5
+Overall design of the GUI: 10/10
+Integration with the BigTwo class: 5/5
+Javadoc and comments: 10/10
+
+==========
+Cannot deselect card by clicked on the raised potion.
+Cannot select card by clicking on the section under a raised card.
+(I am too lazy to fix that)

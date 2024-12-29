@@ -1,0 +1,17 @@
+Score Breakdown (Total: 93/100):
+Implementation: 35/40
+Design: 28/30
+Documentation: 20/20
+Code Style: 10/10
+
+BigTwoCard.java:
+Good implementation of card comparison logic for Big Two rules. The cardRankAdj method effectively handles the special case where A and 2 are considered high cards. Well documented and clean code.
+BigTwoDeck.java:
+Simple and correct implementation. Properly initializes a deck with BigTwoCard objects instead of regular Card objects.
+Hand.java:
+Well-designed abstract class that provides common functionality for all hand types. Good use of abstraction with abstract methods isValid() and getType(). The beats() implementation could be more robust for edge cases. (fixed)
+BigTwo.java:
+Strong implementation overall. The MoveValidator inner class is a good design choice for encapsulating move validation logic. A few minor issues:
+The endOfGame() method could be more efficient by breaking early when a winner is found
+The start() method's game loop could be separated into a different method for better readability
+The composeHand() method could benefit from using a more elegant pattern for hand type checking

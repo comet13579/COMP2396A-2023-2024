@@ -115,7 +115,6 @@ public class BigTwoClient implements NetworkGame{
             // when press this button again it will bug
             this.sock = new Socket(this.serverIP, this.serverPort);
             this.oos = new ObjectOutputStream(sock.getOutputStream());
-            sendMessage(new CardGameMessage(-1,CardGameMessage.JOIN,""));
             Thread thread = new Thread(new ServerHandler());
             thread.start();
             this.gui.disableConnect();
@@ -133,7 +132,7 @@ public class BigTwoClient implements NetworkGame{
      * @param message message received from the game server
      */
     @Override
-    public void parseMessage(GameMessage message) {
+    public synchronized void parseMessage(GameMessage message) {
         switch (message.getType()) {
             case CardGameMessage.PLAYER_LIST -> {
                 this.game.updatePlayerNames((String[]) message.getData());
