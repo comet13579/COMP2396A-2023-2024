@@ -1,5 +1,4 @@
 # HKU COMP2396A Object-Oriented Programming and Java Assignments backup
-## Year 2023-2024 Semester 1
 
 This github repository is used to backup the assignments of HKU COMP2396A Object-Oriented Programming and Java in 2023-2024 semester 1.
 
