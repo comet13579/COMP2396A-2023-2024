@@ -1,3 +1,5 @@
+Overall score: 97/100
+
 Rendering of players’ cards and cards on the table: 20/20
 Implementation of card selection using mouse clicks: 17/20
 Implementation of the game message area: 5/5

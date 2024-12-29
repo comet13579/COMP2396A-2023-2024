@@ -1,3 +1,5 @@
+Overall score: 80.5/100
+
 Feedback comments (not all has been fix)	
 
 Shape class and its tester class: 20/20

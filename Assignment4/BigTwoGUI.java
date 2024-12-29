@@ -319,6 +319,11 @@ public class BigTwoGUI implements CardGameUI {
                 return null;
             }
         }
+        
+        //simply use this if you don't have to pack things into jar
+        //private Image getResourceImage(String path) {
+        //    return new ImageIcon("." + path).getImage();
+        //}
     }
 
     private class PlayButtonListner implements ActionListener {
